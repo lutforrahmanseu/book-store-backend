@@ -92,6 +92,20 @@ async function run() {
       }
     });
 
+    //get single book
+    app.get("/book/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+       const filter ={ _id: new ObjectId(id) }
+        const result = await bookCollections.findOne(filter);
+        console.log(result);
+        res.status(200).send(result);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send("Error deleting book");
+      }
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
